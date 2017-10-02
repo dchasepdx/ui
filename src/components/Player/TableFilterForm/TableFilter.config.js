@@ -72,3 +72,14 @@ export const significantList = [{
   text: strings.filter_significant_include,
   value: 0,
 }];
+
+export const frequencyList = [{
+  text: 'High',
+  value: 10,
+}, {
+  text: 'Medium',
+  value: 5,
+}, {
+  text: 'Low',
+  value: 1,
+}];

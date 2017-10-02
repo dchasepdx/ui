@@ -7,6 +7,7 @@ import querystring from 'querystring';
 import strings from 'lang';
 import { toggleShowForm } from 'actions/formActions';
 import FormField from 'components/Form/FormField';
+import Checkbox from 'material-ui/Checkbox';
 import styles from './TableFilterForm.css';
 import * as data from './TableFilter.config';
 
@@ -170,6 +171,15 @@ class TableFilterForm extends React.Component {
               name="significant"
               label={strings.filter_significant}
               dataSource={data.significantList}
+              formSelectionState={formSelectionState}
+              history={history}
+              strict
+              limit={1}
+            />
+            <FormField
+              name="frequency"
+              label="Frequency"
+              dataSource={data.frequencyList}
               formSelectionState={formSelectionState}
               history={history}
               strict
