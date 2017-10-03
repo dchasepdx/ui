@@ -56,3 +56,4 @@ export const getPlayerMmr = (accountId, params) => action('playerMmr', API_HOST,
 export const getPlayerRankings = (accountId, params) => action('playerRankings', API_HOST, `api/players/${accountId}/rankings`, params, transformRankings);
 export * from './requestActions';
 export * from './formActions';
+export * from './filterActions';
