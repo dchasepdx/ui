@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import Slider from 'material-ui/Slider';
 import strings from 'lang';
 import {
   getPlayerHeroes,
@@ -10,10 +11,18 @@ import Container from 'components/Container';
 import { playerHeroesColumns } from './playerHeroesColumns';
 
 const Heroes = ({
-  data, playerId, error, loading,
+  data, playerId, error, loading, min_matches, handleChange, filtered,
 }) => (
   <Container title={strings.heading_heroes} error={error} loading={loading}>
-    <Table paginated columns={playerHeroesColumns(playerId)} data={data} />
+    <p>{strings.min_matches_played} {min_matches}</p>
+    <Slider 
+      style={{width:200}}
+      min={0}
+      max={100}
+      step={1}
+      onChange={handleChange}
+    />
+    <Table paginated columns={playerHeroesColumns(playerId)} data={filtered || data} />
   </Container>
 );
 
@@ -29,6 +38,14 @@ const getData = (props) => {
 };
 
 class RequestLayer extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      min_matches: 0,
+      filtered: null,
+    }
+  }
+
   componentDidMount() {
     getData(this.props);
   }
@@ -39,8 +56,26 @@ class RequestLayer extends React.Component {
     }
   }
 
+  handleChange(event, value) {
+    const filtered = this.props.data.filter(hero => {
+      return hero.games >= value;
+    })
+
+    this.setState({
+      min_matches: value,
+      filtered,
+    })
+  }
+
   render() {
-    return <Heroes {...this.props} />;
+    return (
+      <Heroes 
+        {...this.props}
+        {...this.state} 
+        handleChange={this.handleChange.bind(this)}  
+      />
+      
+    );
   }
 }
 
